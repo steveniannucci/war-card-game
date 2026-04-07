@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>War Card Game</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <header>
+        <p id="endgame-message"></p>
+        <a href="index.html">
+            <button id="end-game-button">End Game</button>
+        </a>
+    </header>
+    <main>
+        <div id="cpu-side">
+            <div id="cpu-score">Me: 0</div>
+            <div id="cpu-card" class="card-template"></div>
+            <div id="cpu-war-stack">
+                <div id="cpu-war-card1" class="war-stack-card card-template">10</div>
+                <div id="cpu-war-card2" class="war-stack-card card-template">3</div>
+                <div id="cpu-war-card3" class="war-stack-card card-template">5</div>
+            </div>
+        </div>
+        <button id="draw-cards-button" class="card-template" onclick="startMatch()">DRAW</button>
+        <div id="player-side">
+            <div id="player-war-stack">
+                <div id="player-war-card1" class="war-stack-card card-template">4</div>
+                <div id="player-war-card2" class="war-stack-card card-template">3</div>
+                <div id="player-war-card3" class="war-stack-card card-template">10</div>
+            </div>
+            <div id="player-card" class="card-template"></div>
+            <div id="player-score">You: 0</div>
+        </div>
+    </main>
+    <script src="index.js"></script>
+</body>
+</html>
