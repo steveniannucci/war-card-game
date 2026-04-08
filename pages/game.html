@@ -2,18 +2,17 @@
 <html>
 <head>
     <title>War Card Game</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../index.css">
 </head>
 <body>
     <header>
-        <p id="endgame-message"></p>
-        <a href="../index.html">
-            <button id="end-game-button">End Game</button>
-        </a>
+        <p id="cpu-message"></p>
     </header>
     <main>
         <div id="cpu-side">
             <div id="cpu-score">Me: 0</div>
+            <hr>
             <div id="cpu-card" class="card-template"></div>
             <div id="cpu-war-stack">
                 <div id="cpu-war-card1" class="war-stack-card card-template">10</div>
@@ -21,7 +20,10 @@
                 <div id="cpu-war-card3" class="war-stack-card card-template">5</div>
             </div>
         </div>
-        <button id="draw-cards-button" class="card-template" onclick="startMatch()">DRAW</button>
+        <div id="decks-area">
+            <button id="player-deck" class="card-template" onclick="startMatch()">DRAW</button>
+            <button id="cpu-deck" class="card-template" onclick="triggerWrongDeckCpuMessage()"></button>
+        </div>
         <div id="player-side">
             <div id="player-war-stack">
                 <div id="player-war-card1" class="war-stack-card card-template">4</div>
@@ -29,7 +31,16 @@
                 <div id="player-war-card3" class="war-stack-card card-template">10</div>
             </div>
             <div id="player-card" class="card-template"></div>
+            <hr>
             <div id="player-score">You: 0</div>
+        </div>
+        <div id="player-options">
+            <a href="../pages/game.html">
+                <button id="restart-game-button">Restart Game</button>
+            </a>
+            <a href="../index.html">
+                <button id="end-game-button">End Game</button>
+            </a>
         </div>
     </main>
     <script src="../index.js"></script>

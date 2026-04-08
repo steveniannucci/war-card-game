@@ -1,5 +1,5 @@
 body {
-    margin: 0;
+    margin: 20px;
     background: black;
     color: white;
     font-family: 'Times New Roman', Times, serif;
@@ -9,7 +9,7 @@ body {
 
 p {
     text-align: left;
-    margin: 20px;
+    margin: 20px 10%;
 }
 
 button {
@@ -19,6 +19,11 @@ button {
     color: lightgreen;
     padding: 10px 20px;
     font-size: 20px;
+    margin: 10px;
+}
+
+a {
+    text-decoration: none;
 }
 
 button:hover {
@@ -30,7 +35,6 @@ button:hover {
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    gap: 20px;
 }
 
 #player-score, #cpu-score {
@@ -46,6 +50,12 @@ button:hover {
     text-align: right;
 }
 
+#decks-area {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 #player-card, #cpu-card{
     display: block;
     margin: 0 auto;
@@ -56,24 +66,24 @@ button:hover {
 
 #player-war-stack, #cpu-war-stack {
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
     align-items: center;
-    visibility: hidden;
     font-size: 24px;
+    gap: 10px;
 }
 
-#draw-cards-button {
-    margin: 0 auto;
-    padding: 65px 20px;
-
+#player-deck, #cpu-deck {
+    margin: 0 50px;
+    padding: 35px 0;
 }
 
-/* #end-game-button {
-    visibility: hidden;
-} */
+#cpu-deck {
+    padding: 46px 30px;
+}
 
-#endgame-message {
+#cpu-message {
     text-align: center;
+    margin: -5px 0;
     font-size: 20px;
 }
 
@@ -87,14 +97,151 @@ button:hover {
     color: lightgreen;
     border: 4px solid darkgreen;
     border-radius: 4px;
-    padding: 60px 30px;
+    padding: 30px 10px;
     margin: 10px;
 }
 
 .war-stack-card {
+    margin: 10px 40px;
     width: 40px;
+    visibility: hidden;
 }
 
 .italic {
     font-style: italic;
 }
+
+#restart-game-button {
+    margin: 20px;
+}
+
+#player-options {
+    margin: -60px 0;
+}
+
+/* Media queries
+Desktop: 1200px and above
+Tablets: 768px and below.
+Mobile:  480px and below.
+*/
+
+@media (max-width: 768px) {
+   button {
+        border: 2px solid darkgreen;
+        border-radius: 4px;
+        background: black;
+        color: lightgreen;
+        padding: 10px 20px;
+        font-size: 16px;
+        margin: 0;
+    }
+
+    #player-options {
+        margin: 0;
+        text-align: right;
+    }
+
+    #main-menu {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    #start-game-button, #rules-button {
+        margin: 10px;
+    }
+
+    #cpu-deck {
+        padding: 46px 30px;
+    }
+
+    .card-template {
+        display: block;
+        background: black;
+        color: lightgreen;
+        border: 4px solid darkgreen;
+        border-radius: 4px;
+        padding: 30px 10px;
+        margin: 10px;
+    }
+
+    #player-deck, #cpu-deck {
+        margin: 0 50px;
+        padding: 35px 5px;
+    }
+
+    #player-war-stack, #cpu-war-stack {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        visibility: hidden;
+        font-size: 24px;
+        gap: 40px;
+    }
+}
+
+@media (max-width: 480px) {
+   button {
+        border: 2px solid darkgreen;
+        border-radius: 4px;
+        background: black;
+        color: lightgreen;
+        padding: 10px 20px;
+        font-size: 16px;
+        margin: 0;
+    }
+
+    #player-options {
+        margin: 0;
+        text-align: right;
+    }
+
+    #main-menu {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    #start-game-button, #rules-button {
+        margin: 10px;
+    }
+
+    #cpu-deck {
+        padding: 46px 30px;
+    }
+
+    .card-template {
+        display: block;
+        background: black;
+        color: lightgreen;
+        border: 4px solid darkgreen;
+        border-radius: 4px;
+        padding: 30px 10px;
+        margin: 10px;
+    }
+
+    #player-deck, #cpu-deck {
+        margin: 0 50px;
+        padding: 35px 5px;
+    }
+
+    #player-war-stack, #cpu-war-stack {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        visibility: hidden;
+        font-size: 24px;
+        gap: 20px;
+    }
+}
+
+@media (min-width: 1200px) {
+    /*For desktop screens*/
+}
+
+
+

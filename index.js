@@ -1,42 +1,21 @@
 // index .js
 
-// Object of the game is for one player to have all the cards.
-// Only two people could play (user and CPU)
-// One card is dealt to a player each turn (traditionally).
-// Cards won will be reused in a seperate deck.
+// Make sure there are two decks in the center 
+// but only allow the user to draw from their own.
+// Each time the user draws a card, the first time in the playerDeck and opponentDeck array will be removed and displayed on the screen.
+// The winning card of the match will return as the last item of the winner's deck array alongside the claimed card(s).
+// When the game ends, the player should not be able to interact with either deck.
 
-// Game modes: 
-// Traditional (two cards dealt at a time, traditional rankings)
-// Jack's Handicap (Jack is the weakest rank in the game)
-// Double war (fours cards are dealt at a time, quick play)
-// Reverse Rank (rankings are reversed)
-// Custom Rank (rankings are customized from strongest to weakest)
-// Add Jokers (add jokers to the deck)
+// Display a crown or indicator of who is winning throughout the game
 
-// The deck itself hasn't been properly implemented yet.
-// There should be no more than 4 suits per card value and they 
-// can't be repopulated unless they're in either of the claimed cards arrays
+// If the last cards in the war stack are the same, the match must be settled via a coin flip.
+// Cpu responses must use timeout sparingly since they can disrupt the program if the condition HAS BEEN MET once.
+// Game page elements needs to be resized for different screen sizes.
 
-//initialize variables
+// Add an image on the main menu for additonal flair.
+// Consider accessibility. 
 
-let playerCard;
-let cpuCard;
-
-let playerWarCard1;
-let playerWarCard2;
-let playerWarCard3;
-
-let cpuWarCard1;
-let cpuWarCard2;
-let cpuWarCard3;
-
-let playerScore = 0;
-let cpuScore = 0;
-let playerClaimedCards = [];
-let cpuClaimedCards = [];
-let deckHasJokers = false;
-let warHasBeenDeclared = false;
-let gamehasStarted = false; 
+//initialize variables 
 
 let playerScoreEl = document.querySelector("#player-score");
 let cpuScoreEl = document.querySelector("#cpu-score");
@@ -54,149 +33,290 @@ let cpuWarCard1El = document.querySelector("#cpu-war-card1");
 let cpuWarCard2El = document.querySelector("#cpu-war-card2");
 let cpuWarCard3El = document.querySelector("#cpu-war-card3");
 
-let deckEl = document.querySelector("#draw-cards-button");
+let playerdeckEl = document.querySelector("#player-deck");
+let cpudeckEl = document.querySelector("#cpu-deck");
 
 //let startGameEl = document.querySelector("#start-game-button");
-let endGameMessageEl = document.querySelector("#endgame-message");
+let cpuMessageEl = document.querySelector("#cpu-message");
 let endGameEl = document.querySelector("#end-game-button");
 
-let totalCards = 52;
+let playerCard;
+let cpuCard;
 
-// Initial rankings
-// let two = 1;
-// let three = 2;
-// let four = 3;
-// let five = 4;
-// let six = 5;
-// let seven = 6;
-// let eight = 7;
-// let nine = 8;
-// let ten = 9;
-// let jack = 10;
-// let queen = 11;
-// let king = 12;
-// let ace = 13;
-// let joker = 14;
+let playerWarCard1;
+let playerWarCard2;
+let playerWarCard3;
+
+let cpuWarCard1;
+let cpuWarCard2;
+let cpuWarCard3;
+
+let playerScore = 0;
+let cpuScore = 0;
+
+let deckHasJokers = false;
+let warHasBeenDeclared = false;
+let playerWonCoinFlip = false;
+
+// tracks the total number of cards in the full deck
+let totalCardsInFullDeck = 52;
 
 
-let cardValues = [two, three, four, five, six, seven, eight, nine, ten, jack, queen, king, ace];
-let deck = cardValues.flatMap(card => [card, card, card, card])
+let cardValues = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
+let fullDeck = cardValues.flatMap(card => [card, card, card, card])
+let playerDeck = [];
+let cpuDeck = [];
 
-// start the game
 
-// function startGame() {
-//     playerScoreEl.textContent = "You: " + playerScore;
-//     cpuScoreEl.textContent = "CPU: " + cpuScore;
+// adds the cards from the full deck evenly to both player's decks.
+function divideFullDeck() {
+    while (fullDeck.length != 0) {
+        let randomCardIndex = Math.floor(Math.random() * fullDeck.length);
+        let randomCardFromFullDeck = fullDeck.splice(randomCardIndex, 1)[0];
 
-//     startGameEl.style.visibility = "hidden";
-//     deckEl.style.visibility = "visible";
-// }
+        if (playerDeck.length != (totalCardsInFullDeck / 2)) {
+            playerDeck.push(randomCardFromFullDeck);
+        } else {
+            cpuDeck.push(randomCardFromFullDeck);
+        }
+    }
+}
 
-// start the match
+divideFullDeck();
+
+// console.log("Full Deck: " + fullDeck);
+console.log("Player's Deck: " + playerDeck);
+// console.log("Player's Deck Length: " + playerDeck.length);
+console.log("CPU's Deck: " + cpuDeck);
+// console.log("CPU's Deck Length: " + cpuDeck.length)
+
+// starting the game
+
+if (playerScore === 0 && cpuScore === 0) {
+        cpuMessageEl.textContent = "Good luck."
+        setTimeout(() => {
+            if (!warHasBeenDeclared && playerScore === 0 && cpuScore === 0) {
+                cpuMessageEl.textContent = "Whenever you're ready."
+            }
+            //timedOutCpuMessage();
+        }, 10000)
+}
 
 function startMatch() {
+    // reset match
+    playerCardEl.style.visibility = "hidden";
+    cpuCardEl.style.visibility ="hidden";
+
     playerCardEl.style.background = "black";
     cpuCardEl.style.background = "black";
     playerWarCard3El.style.background = "black";
     cpuWarCard3El.style.background = "black";
 
+    cpuMessageEl.textContent = "...";
+
     if (warHasBeenDeclared) {
         warHasBeenDeclared = false;
-        playerWarStackEl.style.visibility = "hidden";
-        cpuWarStackEl.style.visibility = "hidden";
+        playerWarCard1El.style.visibility = "hidden";
+        cpuWarCard1El.style.visibility = "hidden";
+        playerWarCard2El.style.visibility = "hidden";
+        cpuWarCard2El.style.visibility = "hidden";
+        playerWarCard3El.style.visibility = "hidden";
+        cpuWarCard3El.style.visibility = "hidden";
     }
     // deal cards at random to both players
-    playerCardEl.style.visibility = "visible";
-    cpuCardEl.style.visibility ="visible";
 
-    playerCard = getRandomCardValue();
-    cpuCard = getRandomCardValue();
+    playerCard = playerDeck[0];
+    cpuCard = cpuDeck[0];
 
-    playerCardEl.textContent = dealCard(playerCard);
-    cpuCardEl.textContent = dealCard(cpuCard);
+    setTimeout(() => {
+        playerCardEl.style.visibility = "visible";
+        cpuCardEl.style.visibility ="visible";
 
+        playerCardEl.textContent = dealCard(playerCard);
+        cpuCardEl.textContent = dealCard(cpuCard);
 
-    // determine the result of the match
-    if (playerCard > cpuCard) {
-        playerScore += 2;
-        playerScoreEl.textContent = "You: " + playerScore;
-        playerCardEl.style.background = "green"
-    } else if (cpuCard > playerCard) {
-        cpuScore += 2;
-        cpuScoreEl.textContent = "Me: " + cpuScore;
-        cpuCardEl.style.background = "green"
-    } else {
-        initiateWar();
-    }
-    
-    if (playerScore >= 2 || cpuScore >= 2) {
-        endGame();
-    }
+        // determine the result of the match
+        if (playerCard > cpuCard) {
+            playerScore += 2;
+            playerScoreEl.textContent = "You: " + playerScore;
+            playerCardEl.style.background = "green"
+            triggerCpuMessage();
+            reassignCards();
+        } else if (cpuCard > playerCard) {
+            cpuScore += 2;
+            cpuScoreEl.textContent = "Me: " + cpuScore;
+            cpuCardEl.style.background = "green"
+            triggerCpuMessage();
+            reassignCards();
+        } else {
+            initiateWar();
+        }
+
+        //endGame();
+    }, 500)
 }
 
 function endGame() {
     if (playerScore >= 2) {
-        endGameMessageEl.textContent = "Good game. You won."
+        cpuMessageEl.textContent = "Good game. You won."
     } else if (cpuScore >= 2 && (playerCard === 1  && cpuCard <= 10)) {
-        endGameMessageEl.textContent = "Sorry, the Jack loses here."
+        cpuMessageEl.textContent = "Oh! Sorry, the Jack loses here. I win."
     } else if (cpuScore >= 2 && (playerWarCard3 === 1  && cpuWarCard3 <= 10)) {
-        endGameMessageEl.textContent = "Sorry, the Jack loses here."
+        cpuMessageEl.textContent = "Oh! Sorry, the Jack loses here. I win."
     } else if (cpuScore >= 2) {
-        endGameMessageEl.textContent = "Yooou lose! Next time, shoot to win."
+        cpuMessageEl.textContent = "I win. Better luck next time."
     }
-    endGameEl.style.visibility = "visible";
-    deckEl.style.visibility = "hidden";
+    playerdeckEl.style.visibility = "hidden";
+    cpudeckEl.style.visibility = "hidden";
+    setTimeout(() => {
+        cpuMessageEl.textContent = "Wanna play again?";
+        timedOutCpuMessage();
+    }, 10000);
 }
 
 // if the user wanted to add two jokers
 
 function addJokers() {
-    deck.push(joker);
-    deck.push(joker);
+    fullDeck.push(14);
+    fullDeck.push(14);
     deckHasJokers = true;
     console.log(deck);
 }
-
-console.log(deck);
 
 // if war is initiated
 
 function initiateWar() {
     warHasBeenDeclared = true;
-    playerWarStackEl.style.visibility = "visible";
-    cpuWarStackEl.style.visibility = "visible";
+    // playerWarStackEl.style.visibility = "visible";
+    // cpuWarStackEl.style.visibility = "visible";
 
-    playerWarCard1 = getRandomCardValue();
-    playerWarCard2 = getRandomCardValue();
-    playerWarCard3 = getRandomCardValue();
-    cpuWarCard1 = getRandomCardValue();
-    cpuWarCard2 = getRandomCardValue();
-    cpuWarCard3 = getRandomCardValue();
+    playerWarCard1 = playerDeck[1];
+    playerWarCard2 = playerDeck[2];
+    playerWarCard3 = playerDeck[3];
+    cpuWarCard1 = cpuDeck[1];
+    cpuWarCard2 = cpuDeck[2];
+    cpuWarCard3 = cpuDeck[3];
 
-    playerWarCard1El.textContent = dealCard(playerWarCard1);
-    playerWarCard2El.textContent = dealCard(playerWarCard2);
-    playerWarCard3El.textContent = dealCard(playerWarCard3);
-    cpuWarCard1El.textContent = dealCard(cpuWarCard1);
-    cpuWarCard2El.textContent = dealCard(cpuWarCard2);
-    cpuWarCard3El.textContent = dealCard(cpuWarCard3);
+    setTimeout(() => {
+        playerWarCard1El.textContent = dealCard(playerWarCard1);
+        cpuWarCard1El.textContent = dealCard(cpuWarCard1);
 
-    if (playerWarCard3 > cpuWarCard3) {
-        playerScore += 8;
-        playerScoreEl.textContent = "You: " + playerScore;
-        playerWarCard3El.style.background = "green"
-    } else if (cpuWarCard3 > playerWarCard3) {
-        cpuScore += 8;
-        cpuScoreEl.textContent = "Me: " + cpuScore;
-        cpuWarCard3El.style.background = "green"
-    } else {
-        repeatWar();
-    }   
+        playerWarCard1El.style.visibility = "visible";
+        cpuWarCard1El.style.visibility = "visible";
+    }, 1000);
+    setTimeout(() => {
+        playerWarCard2El.textContent = dealCard(playerWarCard2);
+        cpuWarCard2El.textContent = dealCard(cpuWarCard2);
+
+        playerWarCard2El.style.visibility = "visible";
+        cpuWarCard2El.style.visibility = "visible";
+    }, 2000);
+    setTimeout(() => {
+        playerWarCard3El.textContent = dealCard(playerWarCard3);
+        cpuWarCard3El.textContent = dealCard(cpuWarCard3);
+
+        playerWarCard3El.style.visibility = "visible";
+        cpuWarCard3El.style.visibility = "visible";
+
+        if (playerWarCard3 > cpuWarCard3) {
+            playerScore += 8;
+            playerScoreEl.textContent = "You: " + playerScore;
+            playerWarCard3El.style.background = "green"
+            triggerCpuMessage();
+            reassignCards();
+        } else if (cpuWarCard3 > playerWarCard3) {
+            cpuScore += 8;
+            cpuScoreEl.textContent = "Me: " + cpuScore;
+            cpuWarCard3El.style.background = "green"
+            triggerCpuMessage();
+            reassignCards();
+        } else {
+            flipCoin();
+        }
+    }, 3000);
 }
 
-// if war needs to be repeated
+function flipCoin() {
+    cpuMessageEl.textContent = "Alright, time to flip a coin. You're heads. I'm tails."
+    setTimeout(() => {
+        let coinFlip = Math.floor(Math.random() * 2)
+        if (coinFlip === 0) {
+            cpuMessageEl.textContent = "Heads."
+            playerWonCoinFlip = true;
+            setTimeout(() => {
+                playerScore += 8;
+                playerScoreEl.textContent = "You: " + playerScore;
+                playerWarCard3El.style.background = "green"
+                triggerCpuMessage();
+                reassignCards();
+            }, 3000)
+        } else {
+            cpuMessageEl.textContent = "Tails."
+            playerWonCoinFlip = false;
+            setTimeout(() => {
+                cpuScore += 8;
+                cpuScoreEl.textContent = "Me: " + cpuScore;
+                cpuWarCard3El.style.background = "green"
+                triggerCpuMessage();
+                reassignCards();
+            }, 3000)
+            triggerCpuMessage();
+        }
+    }, 8000);
+}
 
-function repeatWar() {
-    initiateWar();
+function reassignCards() {
+    if (warHasBeenDeclared === false && playerCard > cpuCard) {
+        playerDeck.shift();
+        cpuDeck.shift();
+
+        playerDeck.push(playerCard);
+        playerDeck.push(cpuCard);
+    } else if (warHasBeenDeclared === false && cpuCard > playerCard) {
+        playerDeck.shift();
+        cpuDeck.shift();
+
+        cpuDeck.push(playerCard);
+        cpuDeck.push(cpuCard);
+    } else if (warHasBeenDeclared && playerWarCard1 > cpuWarCard3) {
+        playerDeck.shift();
+        playerDeck.shift();
+        playerDeck.shift();
+        playerDeck.shift();
+
+        cpuDeck.shift();
+        cpuDeck.shift();
+        cpuDeck.shift();
+        cpuDeck.shift();
+
+        playerDeck.push(playerCard);
+        playerDeck.push(cpuCard);
+        playerDeck.push(playerWarCard1);
+        playerDeck.push(cpuWarCard1);
+        playerDeck.push(playerWarCard2);
+        playerDeck.push(cpuWarCard2);
+        playerDeck.push(playerWarCard3);
+        playerDeck.push(cpuWarCard3);
+    } else {
+        playerDeck.shift();
+        playerDeck.shift();
+        playerDeck.shift();
+        playerDeck.shift();
+
+        cpuDeck.shift();
+        cpuDeck.shift();
+        cpuDeck.shift();
+        cpuDeck.shift();
+
+        cpuDeck.push(playerCard);
+        cpuDeck.push(cpuCard);
+        cpuDeck.push(playerWarCard1);
+        cpuDeck.push(cpuWarCard1);
+        cpuDeck.push(playerWarCard2);
+        cpuDeck.push(cpuWarCard2);
+        cpuDeck.push(playerWarCard3);
+        cpuDeck.push(cpuWarCard3);
+    }
 }
 
 //generate accurate text values
@@ -236,12 +356,38 @@ function dealCard(chosenCardValue) {
 
 // generates a random number
 
-function getRandomCardValue() {
-    if (deckHasJokers) {
-        let randomNumber =  Math.floor(Math.random() * 14) + 1
-        return randomNumber;
+// function getRandomCardValue() {
+//     if (deckHasJokers) {
+//         let randomNumber =  Math.floor(Math.random() * 14) + 1
+//         return randomNumber;
+//     } else {
+//         let randomNumber = Math.floor(Math.random() * 13) + 1
+//         return randomNumber;
+//     }
+// }
+
+// winning and losing responses from cpu
+
+function triggerCpuMessage() {
+    if (playerScore >= 26 && cpuScore < 26) {
+        cpuMessageEl.textContent = "Looks like you're winning.";
+    } else if (cpuScore >= 26 && playerScore < 26) {
+        cpuMessageEl.textContent = "Looks like I'm winning.";
+    } else if (warHasBeenDeclared && playerWarCard3 > cpuWarCard3 || playerWonCoinFlip) {
+        cpuMessageEl.textContent = "Ah! You won the war.";
+    } else if (warHasBeenDeclared && cpuWarCard3 > playerWarCard3 || !playerWonCoinFlip) {
+        cpuMessageEl.textContent = "Hah! I won the war.";
     } else {
-        let randomNumber = Math.floor(Math.random() * 13) + 1
-        return randomNumber;
+        cpuMessageEl.textContent = "...";
     }
+}
+
+function timedOutCpuMessage() {
+    setTimeout(() => {
+        cpuMessageEl.textContent = "..."
+    }, 10000);
+}
+
+function triggerWrongDeckCpuMessage() {
+    cpuMessageEl.textContent = "That's my deck. Yours is on the left."
 }
