@@ -4,6 +4,7 @@
     <title>War Card Game</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../index.css">
+    <link rel="icon" href="../images/spade.svg">
 </head>
 <body>
     <header>
@@ -11,37 +12,38 @@
     </header>
     <main>
         <div id="cpu-side">
-            <div id="cpu-score">Me: 0</div>
+            <div id="cpu-score"></div>
             <hr>
-            <div id="cpu-card" class="card-template"></div>
             <div id="cpu-war-stack">
-                <div id="cpu-war-card1" class="war-stack-card card-template">10</div>
-                <div id="cpu-war-card2" class="war-stack-card card-template">3</div>
-                <div id="cpu-war-card3" class="war-stack-card card-template">5</div>
+                <div id="cpu-war-card1" class="war-stack-card card-template facedown-card"></div>
+                <div id="cpu-war-card2" class="war-stack-card card-template facedown-card"></div>
+                <div id="cpu-war-card3" class="war-stack-card card-template">?</div>
             </div>
+            <div id="cpu-card" class="card-template">?</div>
         </div>
         <div id="decks-area">
-            <button id="player-deck" class="card-template" onclick="startMatch()">DRAW</button>
-            <button id="cpu-deck" class="card-template" onclick="triggerWrongDeckCpuMessage()"></button>
+            <button id="player-deck" class="card-template facedown-card clickable-card" onclick="startMatch()"></button>
+            <button id="cpu-deck" class="card-template facedown-card clickable-card" onclick="triggerWrongDeckCpuMessage()"></button>
         </div>
         <div id="player-side">
+            <div id="player-card" class="card-template">?</div>
             <div id="player-war-stack">
-                <div id="player-war-card1" class="war-stack-card card-template">4</div>
-                <div id="player-war-card2" class="war-stack-card card-template">3</div>
-                <div id="player-war-card3" class="war-stack-card card-template">10</div>
+                <div id="player-war-card1" class="war-stack-card card-template facedown-card"></div>
+                <div id="player-war-card2" class="war-stack-card card-template facedown-card"></div>
+                <div id="player-war-card3" class="war-stack-card card-template">?</div>
             </div>
-            <div id="player-card" class="card-template"></div>
             <hr>
-            <div id="player-score">You: 0</div>
+            <div id="player-score"></div>
+            <div>
         </div>
-        <div id="player-options">
+        <!-- <div id="player-options">
             <a href="../pages/game.html">
                 <button id="restart-game-button">Restart Game</button>
             </a>
             <a href="../index.html">
                 <button id="end-game-button">End Game</button>
             </a>
-        </div>
+        </div> -->
     </main>
     <script src="../index.js"></script>
 </body>

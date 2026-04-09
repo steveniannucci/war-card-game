@@ -16,7 +16,7 @@ button {
     border: 2px solid darkgreen;
     border-radius: 4px;
     background: black;
-    color: lightgreen;
+    color: rgb(144, 238, 144);
     padding: 10px 20px;
     font-size: 20px;
     margin: 10px;
@@ -26,8 +26,16 @@ a {
     text-decoration: none;
 }
 
+
 button:hover {
     cursor: pointer;
+    border: 2px solid lightgreen;
+}
+
+hr {
+    border: none;
+    height: 0.5px;
+    background: white;
 }
 
 #main-menu {
@@ -35,6 +43,12 @@ button:hover {
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    margin: 40px 0 0 0;
+}
+
+#spade-img {
+    height: 200px;
+    width: 100%;
 }
 
 #player-score, #cpu-score {
@@ -60,7 +74,7 @@ button:hover {
     display: block;
     margin: 0 auto;
     width: 40px;
-    visibility: hidden;
+    visibility: visible;
     font-size: 24px;
 }
 
@@ -74,10 +88,6 @@ button:hover {
 
 #player-deck, #cpu-deck {
     margin: 0 50px;
-    padding: 35px 0;
-}
-
-#cpu-deck {
     padding: 46px 30px;
 }
 
@@ -101,10 +111,19 @@ button:hover {
     margin: 10px;
 }
 
+.facedown-card {
+    background: green;
+    padding: 46px 10px;
+}
+
+.clickable-card:hover {
+    border: 4px solid lightgreen;
+}
+
 .war-stack-card {
     margin: 10px 40px;
     width: 40px;
-    visibility: hidden;
+    visibility: visible;
 }
 
 .italic {
@@ -117,6 +136,11 @@ button:hover {
 
 #player-options {
     margin: -60px 0;
+}
+
+#symbol {
+    width: 300px;
+    height: 300px;
 }
 
 /* Media queries
@@ -167,9 +191,15 @@ Mobile:  480px and below.
         margin: 10px;
     }
 
+    .facedown-card {
+        background: green;
+        padding: 46px 10px;
+    }
+
     #player-deck, #cpu-deck {
-        margin: 0 50px;
-        padding: 35px 5px;
+        margin: 0px 50px;
+        padding: 45px 30px;
+        background: green;
     }
 
     #player-war-stack, #cpu-war-stack {
@@ -224,9 +254,15 @@ Mobile:  480px and below.
         margin: 10px;
     }
 
+    .facedown-card {
+        background: green;
+        padding: 46px 10px;
+    }
+
     #player-deck, #cpu-deck {
-        margin: 0 50px;
-        padding: 35px 5px;
+        margin: 0px 50px;
+        padding: 45px 30px;
+        background: green;
     }
 
     #player-war-stack, #cpu-war-stack {
