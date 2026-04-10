@@ -13,27 +13,38 @@
 // Game page elements needs to be resized for different screen sizes.
 // The user should not be able to draw another card during war.
 // If either play is unable to draw three cards during the war, the one whose prepared wins the game. Otherwise, it's a draw.
-// Consider reshuffling the decks if enough rounds have passed (avoid infinite games).
 
 // Consider players being left-handed and right-handed.
 
 // Add an image on the main menu for additonal flair.
-// Consider accessibility. 
+// Consider accessibility.
+
+// After a certain number of rounds or matches, up the ante by adding new rules to make the game go faster.
+// Levels of difficulty: Normal, Hard, Very Hard, Extreme
 
 // initialize variables
-// initialize scoring elements
+// initialize scoring, difficulty and counter elements
 let playerScoreEl = document.querySelector("#player-score");
 let cpuScoreEl = document.querySelector("#cpu-score");
+let matchesCounterEl = document.querySelector("#matches-counter");
+let currentDifficultyEl = document.querySelector("#current-difficulty")
+const playerPanelEl = document.querySelector("#player-panel");
+const cpuPanelEl = document.querySelector("#cpu-panel");
 
 // initialize card elements
-let playerCardEl = document.querySelector("#player-card");
-let cpuCardEl = document.querySelector("#cpu-card");
+let playerCardEl = document.querySelector("#player-card1");
+let cpuCardEl = document.querySelector("#cpu-card1");
 let playerWarCard1El = document.querySelector("#player-war-card1");
 let playerWarCard2El = document.querySelector("#player-war-card2");
 let playerWarCard3El = document.querySelector("#player-war-card3");
 let cpuWarCard1El = document.querySelector("#cpu-war-card1");
 let cpuWarCard2El = document.querySelector("#cpu-war-card2");
 let cpuWarCard3El = document.querySelector("#cpu-war-card3");
+
+const playerName = "You"
+const cpuName = "CPU"
+let matches = 0;
+let currentDifficulty = "Normal" 
 
 let playerCard;
 let cpuCard;
@@ -44,24 +55,65 @@ let cpuWarCard1;
 let cpuWarCard2;
 let cpuWarCard3;
 
-// initialize player and cpu decks
-let playerdeckEl = document.querySelector("#player-deck");
-let cpudeckEl = document.querySelector("#cpu-deck");
-
-// initialize cpu message element
-let cpuMessageEl = document.querySelector("#cpu-message");
-
 // initialize boolean variables
 let deckHasJokers = false;
 let gameHasStarted = false;
 let warHasBeenDeclared = false;
 let warEndedPrematurely = false;
+let isAbleToFlipCoin = false;
 
-// tracks the number of rounds (matches)
-// let roundsCounter = 10;
-// if (roundsCounter === 0) {
-//     reshuffleDecks();
-// }
+// four facedown cards instead of two
+let doubleRiskWarActivated = false;
+// two cards drawn each match instead of one
+let twoVSTwoMatchesActivated = false;
+// flip up to three coins to determine matches if you were to lose
+let threeFlipsToTheTopActivated = false;
+
+// initialize player and cpu decks based on player's choice
+let deckHasBeenChosen = false;
+let deck1WasChosen = false;
+let deck2WasChosen = false;
+
+let deck1El = document.querySelector("#deck-1");
+let deck2El = document.querySelector("#deck-2");
+
+deck1El.addEventListener("click", assignDeck1ToPlayer);
+deck2El.addEventListener("click", assignDeck2ToPlayer);
+
+function assignDeck1ToPlayer() {
+    deck1WasChosen = true;
+    deck1El.removeEventListener("click", assignDeck1ToPlayer);
+    deck2El.removeEventListener("click", assignDeck2ToPlayer);
+
+    deck1El.addEventListener("click", startMatch);
+    deck2El.addEventListener("click", triggerWrongDeckCpuMessage);
+
+    cpuMessageEl.textContent = "I'll take the right deck then.";
+    setTimeout(() => {
+        if (!gameHasStarted) {
+            cpuMessageEl.textContent = "I'll draw whenever you're ready."
+        }
+    }, 5000);
+}
+
+function assignDeck2ToPlayer() {
+    deck2WasChosen = true;
+    deck1El.removeEventListener("click", assignDeck1ToPlayer);
+    deck2El.removeEventListener("click", assignDeck2ToPlayer);
+
+    deck2El.addEventListener("click", startMatch);
+    deck1El.addEventListener("click", triggerWrongDeckCpuMessage);
+
+    cpuMessageEl.textContent = "I'll take the left deck then.";
+    setTimeout(() => {
+        if (!gameHasStarted) {
+            cpuMessageEl.textContent = "I'll draw whenever you're ready."
+        }
+    }, 5000);
+}
+
+// initialize cpu message element
+let cpuMessageEl = document.querySelector("#cpu-message");
 
 // tracks the total number of cards in the full deck
 let totalCardsInFullDeck;
@@ -106,19 +158,48 @@ divideFullDeck();
 let playerScore = playerDeck.length;
 let cpuScore = cpuDeck.length;
 
-playerScoreEl.textContent = "You: " + playerScore;
-cpuScoreEl.textContent = "CPU: " + cpuScore;
+playerScoreEl.textContent = playerName + ": " + playerScore;
+cpuScoreEl.textContent = cpuName + ": " + cpuScore;
+matchesCounterEl.textContent = "Matches: " + matches;
+currentDifficultyEl.textContent = "Current Difficulty: " + currentDifficulty;
+
 
 // starting the game
 
 if (!gameHasStarted) {
-        cpuMessageEl.textContent = "Whenever you're ready."
+        cpuMessageEl.textContent = "Alright. Choose a deck and we can get started."
 }
 
 // starting a match
 
-function startMatch() {
+function revealPanels() {
     gameHasStarted = true;
+    playerPanelEl.style.visibility = "visible";
+    cpuPanelEl.style.visibility = "visible";
+}
+
+function preventUserFromDrawing() {
+    if (deck1WasChosen) {
+        deck1El.removeEventListener("click", startMatch);
+    } else {
+        deck2El.removeEventListener("click", startMatch);
+    }
+}
+
+function allowUserToDraw() {
+    if (deck1WasChosen) {
+        deck1El.addEventListener("click", startMatch);
+    } else {
+        deck2El.addEventListener("click", startMatch);
+    }
+}
+
+function startMatch() {
+    if (!gameHasStarted) {
+        revealPanels();
+    }
+    preventUserFromDrawing();
+    matches += 1;
     cpuMessageEl.textContent = "...";
     // reset styles for the match
     playerCardEl.style.visibility = "hidden";
@@ -163,7 +244,9 @@ function startMatch() {
         if (playerDeck.length === 0 || cpuDeck.length === 0) {
             endGame();
         }
-    })
+
+        allowUserToDraw();
+    }, 1000)
 }
 
 function endGame() {
@@ -218,12 +301,12 @@ function initiateWar() {
         setTimeout(() => {
             playerWarCard1El.style.visibility = "visible";
             cpuWarCard1El.style.visibility = "visible";
-        });
+        }, 500);
         // place the second card down
         setTimeout(() => {
             playerWarCard2El.style.visibility = "visible";
             cpuWarCard2El.style.visibility = "visible";
-        });
+        }, 1000);
         // place the third and final card down
         setTimeout(() => {
             playerWarCard3El.textContent = dealCard(playerWarCard3);
@@ -231,7 +314,7 @@ function initiateWar() {
 
             playerWarCard3El.style.visibility = "visible";
             cpuWarCard3El.style.visibility = "visible";
-        });
+        }, 1500);
     } while (playerWarCard3 === cpuWarCard3);
     
     if (playerWarCard3 > cpuWarCard3) {
@@ -296,7 +379,8 @@ function reassignCards() {
         cpuDeck.push(cpuWarCard3);
     }
     playerScoreEl.textContent = "You: " + playerDeck.length;
-    cpuScoreEl.textContent = "CPU: " + cpuDeck.length; 
+    cpuScoreEl.textContent = "CPU: " + cpuDeck.length;
+    matchesCounterEl.textContent = "Matches: " + matches; 
 }
 
 //generate accurate text values
@@ -393,10 +477,14 @@ function triggerCpuMessage() {
     } else if (warHasBeenDeclared && playerWarCard3 > cpuWarCard3) {
         cpuMessageEl.textContent = "Ah man! You won the war."
     } else if (warHasBeenDeclared && cpuWarCard3 > playerWarCard3) {
-        cpuMessageEl.textContent = "Hah! I won the war."
+        cpuMessageEl.textContent = "Ha! I won the war."
     }
 }
 
 function triggerWrongDeckCpuMessage() {
-    cpuMessageEl.textContent = "That's my deck. Yours is on the left."
+    if (deck1WasChosen) {
+        cpuMessageEl.textContent = "That's my deck. Yours is on the left.";
+    } else {
+        cpuMessageEl.textContent = "That's my deck. Yours is on the right.";
+    }
 }

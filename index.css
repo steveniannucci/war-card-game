@@ -1,5 +1,7 @@
+/* Universal Elements */
+
 body {
-    margin: 20px;
+    padding: 10px;
     background: black;
     color: white;
     font-family: 'Times New Roman', Times, serif;
@@ -22,14 +24,13 @@ button {
     margin: 10px;
 }
 
-a {
-    text-decoration: none;
-}
-
-
 button:hover {
     cursor: pointer;
     border: 2px solid lightgreen;
+}
+
+a {
+    text-decoration: none;
 }
 
 hr {
@@ -37,6 +38,8 @@ hr {
     height: 0.5px;
     background: white;
 }
+
+/* Main Menu Elements */
 
 #main-menu {
     display: flex;
@@ -51,18 +54,80 @@ hr {
     width: 100%;
 }
 
-#player-score, #cpu-score {
+
+/* CPU Elements */
+
+#cpu-message {
+    background: darkgreen;
+    color: white;
+    text-align: center;
+    margin: 0 0 10px 0;
     font-size: 20px;
-    margin: 20px;
+    /* font-weight: bold; */
 }
 
-#player-score {
-    text-align: left;
+#cpu-panel {
+    display: inline-flex;
+    visibility: hidden;
+    /* flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 0px; */
 }
 
-#cpu-score {
-    text-align: right;
+#matches-and-difficulty-info-box {
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    gap: 20px;
+    border: 2px solid darkgreen;
+    box-sizing: border-box;
+    padding: 5px 20px;
 }
+
+#cpu-score-box {
+    display: flex;
+    justify-content: center;
+    align-items: end;
+    gap: 20px;
+    border: 2px solid darkgreen;
+    box-sizing: border-box;
+    padding: 5px 20px;
+}
+
+#current-difficulty {
+    color: yellow;
+}
+
+/* Player Elements */
+
+#player-panel {
+    display: inline-flex;
+    visibility: hidden;
+}
+
+#player-score-box {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: center;
+    border: 2px solid darkgreen;
+    padding: 0px 20px;
+    box-sizing: border-box;
+    gap: 20px; 
+}
+
+#player-options {
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+    align-items: end;
+    border: 2px solid darkgreen;
+    padding: 0px 20px;
+    box-sizing: border-box;
+}
+
+/* Card Elements */
 
 #decks-area {
     display: flex;
@@ -70,11 +135,17 @@ hr {
     align-items: center;
 }
 
-#player-card, #cpu-card{
+#player-main-stack, #cpu-main-stack {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#player-card1, #player-card2, #cpu-card1, #cpu-card2{
     display: block;
-    margin: 0 auto;
+    margin: 10px 1px;
     width: 40px;
-    visibility: visible;
+    visibility: hidden;
     font-size: 24px;
 }
 
@@ -83,23 +154,14 @@ hr {
     justify-content: center;
     align-items: center;
     font-size: 24px;
-    gap: 10px;
 }
 
-#player-deck, #cpu-deck {
-    margin: 0 50px;
-    padding: 46px 30px;
+#deck-1, #deck-2 {
+    margin: 10px 50px;
+    padding: 39px 25px;
 }
 
-#cpu-message {
-    text-align: center;
-    margin: -5px 0;
-    font-size: 20px;
-}
-
-#options-menu {
-    visibility: hidden;
-}
+/* Classes */
 
 .card-template {
     display: block;
@@ -107,13 +169,13 @@ hr {
     color: lightgreen;
     border: 4px solid darkgreen;
     border-radius: 4px;
-    padding: 30px 10px;
+    padding: 25px 5px;
     margin: 10px;
 }
 
 .facedown-card {
     background: green;
-    padding: 46px 10px;
+    padding: 39px 5px;
 }
 
 .clickable-card:hover {
@@ -121,26 +183,37 @@ hr {
 }
 
 .war-stack-card {
-    margin: 10px 40px;
+    margin: 10px 1px;
     width: 40px;
-    visibility: visible;
+    visibility: hidden;
 }
 
 .italic {
     font-style: italic;
 }
 
-#restart-game-button {
-    margin: 20px;
+.bold {
+    font-weight: bold;
 }
 
-#player-options {
-    margin: -60px 0;
+.inactive-button {
+    border: 2px solid gray;
+    color: gray; 
 }
 
-#symbol {
-    width: 300px;
-    height: 300px;
+.inactive-button:hover {
+    border: 2px solid gray;
+    cursor: auto;
+}
+
+.inactive-card {
+    border: 4px solid rgb(41, 41, 41);
+    background: gray;
+}
+
+.inactive-card:hover {
+    border: 4px solid rgb(41, 41, 41);
+    cursor: auto;
 }
 
 /* Media queries
@@ -150,19 +223,45 @@ Mobile:  480px and below.
 */
 
 @media (max-width: 768px) {
-   button {
+    button {
         border: 2px solid darkgreen;
         border-radius: 4px;
         background: black;
         color: lightgreen;
         padding: 10px 20px;
-        font-size: 16px;
+        font-size: 20px;
         margin: 0;
+    }
+
+    #player-score, #player-coins, #cpu-score, #cpu-coins {
+        width: 50px;
+    }
+
+    #player-options button {
+        width: 100px;
+    }
+
+    #matches-counter {
+        width: 80px;
+    }
+
+    #current-difficulty {
+        width: 175px;
+    }
+
+    #cpu-message {
+        font-size: 20px;
     }
 
     #player-options {
         margin: 0;
-        text-align: right;
+        padding: 5px 20px;
+        gap: 20px;
+    }
+
+    #main-menu-header {
+        width: 265px;
+        margin: 0 auto;
     }
 
     #main-menu {
@@ -177,8 +276,8 @@ Mobile:  480px and below.
         margin: 10px;
     }
 
-    #cpu-deck {
-        padding: 46px 30px;
+    #deck-1, #deck-2 {
+        padding: 39px 25px;
     }
 
     .card-template {
@@ -187,18 +286,24 @@ Mobile:  480px and below.
         color: lightgreen;
         border: 4px solid darkgreen;
         border-radius: 4px;
-        padding: 30px 10px;
+        padding: 25px 5px;
         margin: 10px;
     }
 
     .facedown-card {
         background: green;
-        padding: 46px 10px;
+        padding: 39px 5px;
     }
 
-    #player-deck, #cpu-deck {
-        margin: 0px 50px;
-        padding: 45px 30px;
+    .war-stack-card {
+        margin: 10px 1px;
+        width: 40px;
+        visibility: visible;
+    }
+
+    #deck-1, #deck-2 {
+        margin: 10px 50px;
+        padding: 39px 25px;
         background: green;
     }
 
@@ -208,24 +313,93 @@ Mobile:  480px and below.
         align-items: center;
         visibility: hidden;
         font-size: 24px;
-        gap: 40px;
     }
 }
 
-@media (max-width: 480px) {
-   button {
+@media (max-width: 585px) {
+    button {
         border: 2px solid darkgreen;
         border-radius: 4px;
         background: black;
         color: lightgreen;
         padding: 10px 20px;
-        font-size: 16px;
+        font-size: 18px;
         margin: 0;
+    }
+
+    #player-score, #player-coins, #cpu-score, #cpu-coins {
+        width: 100px;
+        font-size: 18px;
+    }
+
+    #player-options button {
+        width: 100px;
+        font-size: 18px;
+    }
+
+    #matches-counter {
+        width: 70%;
+        font-size: 18px;
+    }
+
+    #current-difficulty {
+        width: 80%;
+        font-size: 18px;
+    }
+
+    #cpu-message {
+        font-size: 18px;
     }
 
     #player-options {
         margin: 0;
-        text-align: right;
+        padding: 5px 20px;
+        gap: 20px;
+    }
+
+    #player-score-box {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        border: 2px solid darkgreen;
+        padding: 5px 20px;
+        box-sizing: border-box;
+        gap: 5px; 
+    }
+
+    #matches-and-difficulty-info-box {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 0px;
+        border: 2px solid darkgreen;
+        box-sizing: border-box;
+        padding: 5px 20px;
+    }
+
+    #cpu-score-box {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        gap: 5px;
+        border: 2px solid darkgreen;
+        box-sizing: border-box;
+        padding: 5px 20px;
+    }
+
+    #player-panel {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    #cpu-panel {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    #main-menu-header {
+        width: 265px;
+        margin: 0 auto;
     }
 
     #main-menu {
@@ -240,8 +414,8 @@ Mobile:  480px and below.
         margin: 10px;
     }
 
-    #cpu-deck {
-        padding: 46px 30px;
+    #deck-1, #deck-2 {
+        padding: 39px 25px;
     }
 
     .card-template {
@@ -250,18 +424,24 @@ Mobile:  480px and below.
         color: lightgreen;
         border: 4px solid darkgreen;
         border-radius: 4px;
-        padding: 30px 10px;
+        padding: 25px 5px;
         margin: 10px;
     }
 
     .facedown-card {
         background: green;
-        padding: 46px 10px;
+        padding: 39px 5px;
     }
 
-    #player-deck, #cpu-deck {
-        margin: 0px 50px;
-        padding: 45px 30px;
+    .war-stack-card {
+        margin: 10px 1px;
+        width: 40px;
+        visibility: visible;
+    }
+
+    #deck-1, #deck-2 {
+        margin: 10px 50px;
+        padding: 39px 25px;
         background: green;
     }
 
@@ -271,13 +451,155 @@ Mobile:  480px and below.
         align-items: center;
         visibility: hidden;
         font-size: 24px;
-        gap: 20px;
     }
 }
 
-@media (min-width: 1200px) {
-    /*For desktop screens*/
+@media (max-width: 425px) {
+   button {
+        border: 2px solid darkgreen;
+        border-radius: 4px;
+        background: black;
+        color: lightgreen;
+        padding: 10px 20px;
+        font-size: 20px;
+        margin: 0;
+    }
+
+    #player-score, #player-coins, #cpu-score, #cpu-coins {
+        width: 100px;
+        font-size: 16px;
+    }
+
+    #player-options {
+        display: flex;
+        flex-direction: row;
+        justify-content: end;
+        align-items: end;
+        border: 2px solid darkgreen;
+        padding: 5px 10px;
+        box-sizing: border-box;
+        gap: 10px;
+    }
+
+    #player-options button {
+        padding: 5px 5px;
+        font-size: 18px;
+        max-width: 75px;
+    }
+
+    #matches-counter {
+        width: 100%;
+        font-size: 16px;
+    }
+
+    #current-difficulty {
+        width: 80%;
+        font-size: 16px;
+    }
+
+    #cpu-message {
+        font-size: 16px;
+    }
+
+    #player-options {
+        margin: 0;
+        text-align: right;
+    }
+
+    #player-options button {
+        width: 100%;
+        font-size: 16px;
+    }
+
+    #main-menu {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    #start-game-button, #rules-button {
+        margin: 10px;
+    }
+
+    #deck-2 {
+        padding: 46px 30px;
+    }
+
+    #player-options button {
+        width: 100px;
+        font-size: 16px;
+    }
+
+    #player-score-box {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        border: 2px solid darkgreen;
+        padding: 5px 20px;
+        box-sizing: border-box;
+        gap: 5px; 
+    }
+
+    #matches-and-difficulty-info-box {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 0px;
+        border: 2px solid darkgreen;
+        box-sizing: border-box;
+        padding: 5px 20px;
+    }
+
+    #cpu-score-box {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        gap: 5px;
+        border: 2px solid darkgreen;
+        box-sizing: border-box;
+        padding: 5px 20px;
+    }
+
+    .card-template {
+        display: block;
+        background: black;
+        color: lightgreen;
+        border: 4px solid darkgreen;
+        border-radius: 4px;
+        padding: 25px 5px;
+        margin: 10px;
+    }
+
+    .facedown-card {
+        background: green;
+        padding: 39px 5px;
+    }
+
+    .war-stack-card {
+        margin: 10px 1px;
+        width: 40px;
+        visibility: visible;
+    }
+
+    #deck-1, #deck-2 {
+        margin: 10px 50px;
+        padding: 39px 25px;
+        background: green;
+    }
+
+    #player-war-stack, #cpu-war-stack {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        visibility: hidden;
+        font-size: 24px;
+    }
 }
 
+/* Good up until max-width: 340px */
 
-
+@media (max-width: 340px) {
+    /* Add as needed */
+}

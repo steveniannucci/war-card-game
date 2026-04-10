@@ -7,43 +7,65 @@
     <link rel="icon" href="../images/spade.svg">
 </head>
 <body>
-    <header>
-        <p id="cpu-message"></p>
-    </header>
     <main>
         <div id="cpu-side">
-            <div id="cpu-score"></div>
+            <div id="cpu-message"></div>
+            <div id="cpu-panel">
+                <div id="matches-and-difficulty-info-box">
+                    <div id="matches-counter"></div>
+                    <div id="current-difficulty"></div>
+                </div>
+                <div id="cpu-score-box">
+                    <div id="cpu-score"></div>
+                    <div id="cpu-coins">Coins: 0</div>
+                </div>
+            </div>
             <hr>
             <div id="cpu-war-stack">
                 <div id="cpu-war-card1" class="war-stack-card card-template facedown-card"></div>
                 <div id="cpu-war-card2" class="war-stack-card card-template facedown-card"></div>
+                <!-- <div id="cpu-war-card4" class="war-stack-card card-template facedown-card"></div>
+                <div id="cpu-war-card5" class="war-stack-card card-template facedown-card"></div> -->
                 <div id="cpu-war-card3" class="war-stack-card card-template">?</div>
             </div>
-            <div id="cpu-card" class="card-template">?</div>
+            <div id="cpu-main-stack">
+                <div id="cpu-card1" class="card-template">?</div>
+                <!-- <div id="cpu-card2" class="card-template">?</div> -->
+            </div>
         </div>
         <div id="decks-area">
-            <button id="player-deck" class="card-template facedown-card clickable-card" onclick="startMatch()"></button>
-            <button id="cpu-deck" class="card-template facedown-card clickable-card" onclick="triggerWrongDeckCpuMessage()"></button>
+            <button id="deck-1" class="card-template facedown-card clickable-card"></button>
+            <button id="deck-2" class="card-template facedown-card clickable-card"></button>
         </div>
         <div id="player-side">
-            <div id="player-card" class="card-template">?</div>
+            <div id="player-main-stack">
+                <div id="player-card1" class="card-template">?</div>
+                <!-- <div id="player-card2" class="card-template">?</div> -->
+            </div>
             <div id="player-war-stack">
                 <div id="player-war-card1" class="war-stack-card card-template facedown-card"></div>
                 <div id="player-war-card2" class="war-stack-card card-template facedown-card"></div>
+                <!-- <div id="player-war-card4" class="war-stack-card card-template facedown-card"></div> -->
+                <!-- <div id="player-war-card5" class="war-stack-card card-template facedown-card"></div> -->
                 <div id="player-war-card3" class="war-stack-card card-template">?</div>
             </div>
             <hr>
-            <div id="player-score"></div>
-            <div>
+            <div id="player-panel">
+                <div id="player-score-box">
+                    <div id="player-score"></div>
+                    <div id="player-coins">Coins: 0</div>
+                </div>
+                <div id="player-options">
+                    <a href="../pages/game.html">
+                        <button id="restart-game-button">Restart Game</button>
+                    </a>
+                    <a href="../index.html">
+                        <button id="end-game-button">Exit Game</button>
+                    </a>
+                    <button id="flip-coin-button" class="inactive-button">Flip Coin</button>
+                </div>
+            </div>
         </div>
-        <!-- <div id="player-options">
-            <a href="../pages/game.html">
-                <button id="restart-game-button">Restart Game</button>
-            </a>
-            <a href="../index.html">
-                <button id="end-game-button">End Game</button>
-            </a>
-        </div> -->
     </main>
     <script src="../index.js"></script>
 </body>
