@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>War Card Game</title>
+    <title>War Card Game Simulator</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../index.css">
     <link rel="icon" href="../images/spade.svg">
@@ -22,11 +22,16 @@
             </div>
             <hr>
             <div id="cpu-war-stack">
-                <div id="cpu-war-card1" class="war-stack-card card-template facedown-card"></div>
-                <div id="cpu-war-card2" class="war-stack-card card-template facedown-card"></div>
-                <!-- <div id="cpu-war-card4" class="war-stack-card card-template facedown-card"></div>
-                <div id="cpu-war-card5" class="war-stack-card card-template facedown-card"></div> -->
-                <div id="cpu-war-card3" class="war-stack-card card-template">?</div>
+                <div id="cpu-facedown-war-stack-cards">
+                    <div id="cpu-war-card1" class="war-stack-card card-template facedown-card"></div>
+                    <div id="cpu-war-card2" class="war-stack-card card-template facedown-card"></div>
+                    <!-- <div id="cpu-war-card4" class="war-stack-card card-template facedown-card"></div>
+                    <div id="cpu-war-card5" class="war-stack-card card-template facedown-card"></div>
+                    <div id="cpu-war-card6" class="war-stack-card card-template facedown-card"></div> -->
+                </div>
+                <div id="cpu-faceup-war-stack-card">
+                    <div id="cpu-war-card3" class="war-stack-card card-template">?</div>
+                </div>
             </div>
             <div id="cpu-main-stack">
                 <div id="cpu-card1" class="card-template">?</div>
@@ -43,11 +48,16 @@
                 <!-- <div id="player-card2" class="card-template">?</div> -->
             </div>
             <div id="player-war-stack">
-                <div id="player-war-card1" class="war-stack-card card-template facedown-card"></div>
-                <div id="player-war-card2" class="war-stack-card card-template facedown-card"></div>
-                <!-- <div id="player-war-card4" class="war-stack-card card-template facedown-card"></div> -->
-                <!-- <div id="player-war-card5" class="war-stack-card card-template facedown-card"></div> -->
-                <div id="player-war-card3" class="war-stack-card card-template">?</div>
+                <div id="player-facedown-war-stack-cards">
+                    <div id="player-war-card1" class="war-stack-card card-template facedown-card"></div>
+                    <div id="player-war-card2" class="war-stack-card card-template facedown-card"></div>
+                    <!-- <div id="player-war-card4" class="war-stack-card card-template facedown-card"></div>
+                    <div id="player-war-card5" class="war-stack-card card-template facedown-card"></div>
+                    <div id="player-war-card6" class="war-stack-card card-template facedown-card"></div> -->
+                </div>
+                <div id="player-faceup-war-stack-card">
+                    <div id="player-war-card3" class="war-stack-card card-template">?</div>
+                </div>
             </div>
             <hr>
             <div id="player-panel">

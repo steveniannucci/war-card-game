@@ -151,9 +151,15 @@ hr {
 
 #player-war-stack, #cpu-war-stack {
     display: flex;
+    flex-direction: row;
     justify-content: center;
     align-items: center;
     font-size: 24px;
+    visibility: visible;
+}
+
+#cpu-facedown-war-stack-cards, #cpu-faceup-war-stack-card, #player-facedown-war-stack-cards, #player-faceup-warstack-card {
+    display: flex;
 }
 
 #deck-1, #deck-2 {
@@ -183,7 +189,7 @@ hr {
 }
 
 .war-stack-card {
-    margin: 10px 1px;
+    margin: 10px -15px;
     width: 40px;
     visibility: hidden;
 }
@@ -296,7 +302,7 @@ Mobile:  480px and below.
     }
 
     .war-stack-card {
-        margin: 10px 1px;
+        margin: 10px -15px;
         width: 40px;
     }
 
@@ -433,7 +439,7 @@ Mobile:  480px and below.
     }
 
     .war-stack-card {
-        margin: 10px 1px;
+        margin: 10px -15px;
         width: 40px;
     }
 
@@ -576,7 +582,7 @@ Mobile:  480px and below.
     }
 
     .war-stack-card {
-        margin: 10px 1px;
+        margin: 10px -15px;
         width: 40px;
     }
 
