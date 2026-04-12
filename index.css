@@ -149,13 +149,21 @@ hr {
     font-size: 24px;
 }
 
+#player-card2, #cpu-card2 {
+    display: none;
+}
+
 #player-war-stack, #cpu-war-stack {
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
     font-size: 24px;
-    visibility: visible;
+    visibility: hidden;
+}
+
+#player-war-card3, #player-war-card4, #player-war-card5, #cpu-war-card3, #cpu-war-card4, #cpu-war-card5 {
+    display: none;
 }
 
 #cpu-facedown-war-stack-cards, #cpu-faceup-war-stack-card, #player-facedown-war-stack-cards, #player-faceup-warstack-card {
@@ -180,7 +188,10 @@ hr {
 }
 
 .facedown-card {
-    background: green;
+    background-image: url(./images/spade.svg), linear-gradient(green, black);
+    background-size: 5px;
+    background-repeat: round;
+    /* background: green; */
     padding: 39px 5px;
 }
 
@@ -212,13 +223,8 @@ hr {
     cursor: auto;
 }
 
-.inactive-card {
-    border: 4px solid rgb(41, 41, 41);
-    background: gray;
-}
-
 .inactive-card:hover {
-    border: 4px solid rgb(41, 41, 41);
+    border: 4px solid darkgreen;
     cursor: auto;
 }
 
@@ -290,14 +296,15 @@ Mobile:  480px and below.
         display: block;
         background: black;
         color: lightgreen;
-        border: 4px solid darkgreen;
         border-radius: 4px;
         padding: 25px 5px;
         margin: 10px;
     }
 
     .facedown-card {
-        background: green;
+        background-image: url(./images/spade.svg), linear-gradient(green, black);
+        background-size: 5px;
+        background-repeat: round;
         padding: 39px 5px;
     }
 
@@ -309,7 +316,6 @@ Mobile:  480px and below.
     #deck-1, #deck-2 {
         margin: 10px 50px;
         padding: 39px 25px;
-        background: green;
     }
 
     #player-war-stack, #cpu-war-stack {
@@ -374,7 +380,7 @@ Mobile:  480px and below.
 
     #matches-and-difficulty-info-box {
         display: flex;
-        justify-content: space-between;
+        justify-content: center;
         align-items: center;
         gap: 0px;
         border: 2px solid darkgreen;
@@ -427,14 +433,15 @@ Mobile:  480px and below.
         display: block;
         background: black;
         color: lightgreen;
-        border: 4px solid darkgreen;
         border-radius: 4px;
         padding: 25px 5px;
         margin: 10px;
     }
 
     .facedown-card {
-        background: green;
+        background-image: url(./images/spade.svg), linear-gradient(green, black);
+        background-size: 5px;
+        background-repeat: round;
         padding: 39px 5px;
     }
 
@@ -446,7 +453,6 @@ Mobile:  480px and below.
     #deck-1, #deck-2 {
         margin: 10px 50px;
         padding: 39px 25px;
-        background: green;
     }
 
     #player-war-stack, #cpu-war-stack {
@@ -570,14 +576,15 @@ Mobile:  480px and below.
         display: block;
         background: black;
         color: lightgreen;
-        border: 4px solid darkgreen;
         border-radius: 4px;
         padding: 25px 5px;
         margin: 10px;
     }
 
     .facedown-card {
-        background: green;
+        background-image: url(./images/spade.svg), linear-gradient(green, black);
+        background-size: 5px;
+        background-repeat: round;
         padding: 39px 5px;
     }
 
@@ -589,7 +596,6 @@ Mobile:  480px and below.
     #deck-1, #deck-2 {
         margin: 10px 50px;
         padding: 39px 25px;
-        background: green;
     }
 
     #player-war-stack, #cpu-war-stack {
